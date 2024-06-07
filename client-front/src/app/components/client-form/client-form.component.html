@@ -1,0 +1,57 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="text-center mb-4">{{(client.id > 0) ? 'Actualizar' : 'Crear'}} Cliente: </h2>
+                <a [routerLink]="['/clients']" class="btn btn-light btn-xs float-right">
+                    <i class="bi bi-arrow-left"></i> Volver
+                </a>
+            
+        </div>
+            <form (ngSubmit)="onSubmit(clientForm)" #clientForm="ngForm">
+                
+                <div class="form-group">
+                    <label for="name">Nombre</label>
+                    <input id="name" placeholder="Ingrese Nombre" name="name" [(ngModel)]="client.name" class="form-control"
+                           #name="ngModel">
+                    <div *ngIf="errors?.name" class="text-danger">{{errors.name}}</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastname">Apellido</label>
+                    <input id="lastname" placeholder="Lastname" name="lastname" [(ngModel)]="client.lastname" class="form-control my-2" 
+                           #lastname="ngModel">
+                    <div *ngIf="errors?.lastname" class="text-danger">{{errors.lastname}}</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" placeholder="Email" name="email" [(ngModel)]="client.email" class="form-control my-2"
+                           type="email" required email #email="ngModel">
+                    <div *ngIf="errors?.email" class="text-danger">{{errors.email}}</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="city">Ciudad</label>
+                    <select id="city" [compareWith]="compareCity" class="form-control" [(ngModel)]="client.city" name="city"
+                            #city="ngModel">
+                        <option placeholder="Email" [ngValue]="undefined">Seleccionar una ciudad</option> 
+                        <option *ngFor="let city of cities" [ngValue]="city">{{city.name}} </option>
+                    </select>
+                </div>
+
+                <div class="form-group text-center">
+                   
+                    <button type="submit" class="btn btn-primary m-2">
+                        <i class="bi bi-save"></i> {{(client.id > 0) ? 'Actualizar' : 'Crear'}}
+                    </button>
+                    
+                    <button type="button" class="btn btn-secondary my-2" (click)="onClear(clientForm)">
+                        <i class="bi bi-x-circle"></i> Limpiar
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

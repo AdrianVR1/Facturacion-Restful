@@ -1,0 +1,75 @@
+<div class="open-modal animations fadeIn" *ngIf="modalService.modal">
+<div class="modal" tabindex="-1" style="display:block;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{title}}</h5>
+                <button (click)="closeModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm">
+                            <ul class="list-group">
+                                <li class="list-group-item"><strong>Nombre:</strong> {{client.name}}</li>
+                                <li class="list-group-item"><strong>Apellido:</strong> {{client.lastname}}</li>
+                                <li class="list-group-item"><strong>Email:</strong> {{client.email}}</li>
+                                <li class="list-group-item"><strong>Fecha de Creación:</strong> {{client.date}}</li>
+                                <li class="list-group-item"><strong>Fecha de Actualización:</strong> {{client.dateDt ? client.dateDt : 'Aún no ha sido actualizado' }}</li>
+                                <li class="list-group-item"><strong>Ciudad:</strong> {{client.city ? client.city.name : 'N/A'}}</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="row">
+                            <div class="alert alert-info my-4" *ngIf="client.invoices.length==0">
+                                No hay facturas asignadas para el cliente {{client.name}}
+                            </div> 
+
+                            <div>
+                                <button class="btn btn-primary btn-sm my-2" [routerLink]="['/invoices/form', client.id]">
+                                    <i class="bi bi-file-earmark"></i> Nueva Factura
+                                </button>
+                            </div>
+
+                        <table class="table table-bordered table-striped my-4" *ngIf="client.invoices.length>0" >
+                            <thead>
+                                <th>Folio</th>
+                                <th>Descripción</th>
+                                <th>Fecha</th>
+                                <th>Total</th>
+                                <th>Detalle</th>
+                                <th>Eliminar</th>
+                            </thead>
+
+                            <tbody>
+                               <tr *ngFor="let invoice of client.invoices">
+                                    <td>{{invoice.id}}</td>
+                                    <td>{{invoice.description}}</td>
+                                    <td>{{invoice.createAt}}</td>
+                                    <td>{{invoice.total}}</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm" type="button" [routerLink]="['/invoices', invoice.id]">
+                                            <i class="bi bi-info-circle"></i> Ver
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger btn-sm" type="button" (click)="delete(invoice)">
+                                            <i class="bi bi-trash"></i> Eliminar
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button (click)="closeModal()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button> </div>
+        </div>
+    </div>
+</div>
+</div>

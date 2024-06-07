@@ -1,0 +1,100 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>{{title}}: {{invoice.description}}</h2>
+                <a [routerLink]="['/clients/page', 0]" class="btn btn-light btn-xs">
+                    <i class="bi bi-arrow-left"></i> Volver
+                </a>
+            </div>
+
+            <form>
+
+                <div class="form-group row" *ngIf="invoice.client">
+                    <label for="client" class="col-sm-2 col-form-label">Cliente</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="client" name="client" value="{{invoice.client.name}}"
+                            class="form-control" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="description" class="col-sm-2 col-form-label">Descripción</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="description" name="description" [(ngModel)]="invoice.description" #description="ngModel"
+                            class="form-control">
+                            <div *ngIf="errors?.description" class="text-danger">{{errors.description}}</div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="observation" class="col-sm-2 col-form-label">Observación</label>
+                    <div class="col-sm-6">
+                        <textarea id="observation" name="observation" [(ngModel)]="invoice.observation"
+                            class="form-control"></textarea>
+                            
+                    </div>
+                </div>
+
+
+                 <div class="form-group row">
+                    <div class="col-sm-6">
+                        <mat-form-field>
+                            <mat-label>Añadir producto</mat-label>
+                            <input type="text" placeholder="Añadir producto" aria-label="Productos" matInput
+                                [formControl]="myControl" [matAutocomplete]="auto">
+                            <mat-autocomplete #auto="matAutocomplete" [displayWith]="showName" (optionSelected)="selectedProduct($event)">
+                                @for (invoice of filteredOptions | async; track invoice) {
+                                <mat-option [value]="invoice">{{invoice.name}}</mat-option>
+                                }
+                            </mat-autocomplete>
+                        </mat-form-field>
+                        <div *ngIf="errorMessage" class="text-danger mt-2">{{errorMessage}}</div>
+                    </div>
+                </div>
+
+            
+                
+                <div class="alert alert-info my-4" *ngIf="invoice.items.length==0">
+                    No hay lineas asignadas para la factura. Debe agregar almenos una!
+                </div>  
+                <table class="table table-striped table-hover table-sm" >
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Total</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let item of invoice.items">
+                            <td>{{item.product.name}}</td>
+                            <td>{{item.product.price}}</td>
+                            <td><input type="number" value="{{item.quantity}}" class="form-control col-sm-4" (change)="updateQuantity(item.product.id, $event)">  </td>
+                            <td>{{item.calculateAmount()}}</td>
+                            <td><button class="btn btn-danger btn-sm" (click)="deleteProduct(item.product.id)">
+                                <i class="bi bi-trash"></i> Eliminar
+                            </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h5 class="float-right" *ngIf="invoice.items.length > 0">Gran Total: <span class="bagde bagde-primary">{{invoice.calculateBigTotal()}}</span></h5>
+
+
+
+                <div class="form-group row">
+                    <div class="col-sm-6 offset-sm-2">
+                        <button type="submit" (click)="create()" class="btn btn-primary">
+                            <i class="bi bi-file-earmark-plus"></i> Crear Factura
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

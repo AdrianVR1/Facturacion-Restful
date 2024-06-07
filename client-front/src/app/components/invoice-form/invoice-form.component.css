@@ -1,0 +1,19 @@
+.container {
+    margin-top: 50px;
+}
+
+h2 {
+    margin-bottom: 30px;
+}
+
+.btn-xs {
+    font-size: 0.875rem;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.btn {
+    margin: 5px;
+}

@@ -12,6 +12,10 @@ El front-end del cliente es una aplicación construida con Angular. Proporciona 
 
 La API REST está construida con Spring Boot y proporciona los servicios backend para la aplicación de facturación.
 
+### Base de Datos
+
+La aplicación utiliza MySQL como sistema de gestión de bases de datos. Se incluye un archivo SQL para la creación y configuración de la base de datos.
+
 ## Características
 
 - Listar clientes

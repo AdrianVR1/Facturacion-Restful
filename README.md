@@ -6,7 +6,7 @@ Este proyecto es una aplicación de facturación Incluye dos componentes princip
 
 ### client-front
 
-El front-end del cliente es una aplicación construida con [framework o librería utilizada Angular]. Proporciona la interfaz de usuario para interactuar con la API REST.
+El front-end del cliente es una aplicación construida con Angular. Proporciona la interfaz de usuario para interactuar con la API REST.
 
 ### spring-apirest
 
